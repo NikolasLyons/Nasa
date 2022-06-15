@@ -7,3 +7,11 @@ export const api = Axios.create({
     api_key: 'c4kFzolMymu1KRST4U6OyAZyHrTO3NQTwYKsuQeE',
   }
 })
+
+export const Roverapi = Axios.create({
+  baseURL: 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=c4kFzolMymu1KRST4U6OyAZyHrTO3NQTwYKsuQeE',
+  timeout: 8000,
+})
+
+
+

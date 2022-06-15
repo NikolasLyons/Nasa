@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <img alt="logo" src="../assets/img/cw-logo.png" height="45" />
+        <img alt="logo" src="https://www.nasa.gov/sites/default/files/thumbnails/image/nasa-logo-web-rgb.png" height="45" />
       </div>
     </router-link>
     <button
@@ -25,7 +25,13 @@
           >
             About
           </router-link>
-        </li>
+          <router-link
+            :to="{ name: 'Rover' }"
+            class="btn text-success lighten-30 selectable text-uppercase"
+          >
+            Rovers
+          </router-link>
+          </li>
       </ul>
       <!-- LOGIN COMPONENT HERE -->
       <Login />
@@ -37,6 +43,7 @@
 export default {
   setup() {
     return {};
+    
   },
 };
 </script>
