@@ -1,36 +1,65 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 bg-white rounded elevation-3">
-      <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo" class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
+  <div class="container-fluid" :style="`background-image: url(${APOD.url})`">
+    <div class="row">
+      <div class="col-12 text-light">
+        <label for="Date">Date</label>
+        <input class="date-picker" type="date" id="date" name="date" width="25" v-model="newDate" @change="getDate">
+        
+        <h3>{{APOD.title}}</h3>
+        <p>{{APOD.explanation}}</p>
+        <p>{{APOD.copyright}}</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+
+import { computed, onMounted, ref } from "vue"
+import { AppState } from "../AppState"
+import { apodService } from "../services/APODService"
+import { logger } from "../utils/Logger"
+import Pop from "../utils/Pop"
 export default {
-  name: 'Home'
+  name: 'Home',
+  setup(){
+    const newDate = ref('')
+    onMounted(async ()=>{
+      try {
+        await apodService.getAPOD()
+      
+      } catch (error) {
+        Pop.toast(error.message,"error")
+        logger.error(error)
+      }
+    });
+   
+    return {
+      APOD: computed(()=> AppState.APOD),
+      async getDate(){
+        await apodService.getDate(newDate.value)
+        logger.log(newDate.value)
+
+      },
+      newDate
+
+      
+    }
+
+  }
 }
 </script>
 
 <style scoped lang="scss">
-.home{
-  display: grid;
-  height: 80vh;
-  place-content: center;
-  text-align: center;
-  user-select: none;
-  .home-card{
-    width: 50vw;
-    > img{
-      height: 200px;
-      max-width: 200px;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
-  }
+.container-fluid{
+  min-height: 100vh;
+  object-fit: contain;
+  background-size: cover;
+  
 }
+
+// .date-picker{
+//  display: none;
+ 
+// }
 </style>
